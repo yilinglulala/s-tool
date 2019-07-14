@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas保存图片</title>
+	<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+	<button id="saveImg">保存图片</button>
+	文件名：<input type="text" id="filename">
+	<select name="" id="mimetype">
+		<option value="image/jpeg">JPG</option>
+		<option value="image/png">PNG</option>
+	</select>
+	<img src="">
+	<div>
+		<canvas id="canvas" width="880" height="430"></canvas>
+	</div>
+	<script>
+		var canvas=document.getElementById('canvas');
+		var cxt=canvas.getContext('2d');
+		cxt.beginPath();
+		cxt.moveTo(0,50);
+		cxt.lineTo(100,50);
+		cxt.strokeStyle='red';
+		cxt.stroke();
+		cxt.beginPath();
+		cxt.moveTo(0,150);
+		cxt.lineTo(100,150);
+		cxt.strokeStyle='green';
+		cxt.stroke();
+		$("#saveImg").click(function(){
+			var imgDataUrl=canvas.toDataURL($("#mimetype").val());
+			var aLink = document.createElement("a");
+		    aLink.download = $("#filename").val()||'';// 设置下载的文件名，默认是'下载'
+		    aLink.href = imgDataUrl;
+		    document.body.appendChild(aLink);
+		    aLink.click();
+		    aLink.remove(); // 下载之后把创建的元素删除
+		})
+	</script>
+</body>
+</html>
